@@ -1,7 +1,7 @@
 import pygame
 from parameters import *
 import random
-from fish import Fish, fishes
+from game.fish import Fish, fishes
 
 #funtion to draw the game background
 def draw_game_background(screen):

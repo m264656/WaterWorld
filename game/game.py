@@ -1,9 +1,6 @@
 import pygame
-import sys
-import random
 
-from fish import Fish, fishes
-from game_background import draw_game_background, add_fish
+from game_background import add_fish
 from parameters import *
 from main_boat import Main_Boat
 
