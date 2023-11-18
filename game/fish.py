@@ -2,6 +2,7 @@
 
 import pygame
 import random
+from parameters import *
 
 class Fish(pygame.sprite.Sprite):
     def __init__(self, x,y):
