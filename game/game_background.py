@@ -5,8 +5,7 @@ from fish import Fish, fishes
 
 #funtion to draw the game background
 def draw_game_background(screen):
-    water = pygame.image.load("../assets/sprites/water.png")
-    water.set_colorkey((0,0,0))
+    water = pygame.image.load("../assets/sprites/water.png").convert()
 
     #fill screen with water
     for x in range(0, screen_width, tile_size):
