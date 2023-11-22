@@ -45,13 +45,15 @@ while lives > 0 and running:
             if event.key == pygame.K_w:
                 print("You pressed the key up key")
                 player.increase_speed()
-                fish.increase_speed()
+                for fish in fishes:
+                    fish.increase_speed()
                 #blue_coral.increase_speed()
             if event.key == pygame.K_s:
                 print("You pressed the down key")
                 player.decrease_speed()
-                fish.decrease_speed()
-                #Blue_Coral.decrease_speed()
+                for fish in fishes:
+                    fish.decrease_speed()
+                #blue_coral.decrease_speed()
             if event.key == pygame.K_a:
                 print("You pressed the left key")
                 player.move_left()
@@ -59,7 +61,7 @@ while lives > 0 and running:
                 print("You pressed the right key")
                 player.move_right()
 
-        print(player.speed)
+        #print(player.speed)
         if event.type == pygame.KEYUP:
             player.stop()
 
@@ -85,9 +87,10 @@ while lives > 0 and running:
     if result2:
         # play sounds
         #pygame.mixer.Sound.play(hurt)
-        lives -= len(result2)
-        score -= len(result2)
-        add_blue_corals(len(result2))
+        if len(result2) == 1:
+            lives -= 1
+            print(lives)
+            score -= len(result2)
 
     # check if fish left the screen
     for fish in fishes:
