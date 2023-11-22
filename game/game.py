@@ -47,13 +47,15 @@ while lives > 0 and running:
                 player.increase_speed()
                 for fish in fishes:
                     fish.increase_speed()
-                #blue_coral.increase_speed()
+                for blue_coral in blue_corals:
+                    blue_coral.increase_speed()
             if event.key == pygame.K_s:
                 print("You pressed the down key")
                 player.decrease_speed()
                 for fish in fishes:
                     fish.decrease_speed()
-                #blue_coral.decrease_speed()
+                for blue_coral in blue_corals:
+                    blue_coral.decrease_speed()
             if event.key == pygame.K_a:
                 print("You pressed the left key")
                 player.move_left()
