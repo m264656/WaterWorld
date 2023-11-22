@@ -29,6 +29,10 @@ add_blue_corals(5)
 #draw player the main boat player
 player = Main_Boat(screen_width/2, screen_height/2)
 
+#load new font to keep store
+score = 0
+score_font = pygame.font.Font("../assets/fonts/Minangrasa.otf", 50)
+
 #set lives
 lives = NUM_LIVES
 
@@ -42,12 +46,12 @@ while lives > 0 and running:
                 print("You pressed the key up key")
                 player.increase_speed()
                 fish.increase_speed()
-                blue_coral.increase_speed()
+                #blue_coral.increase_speed()
             if event.key == pygame.K_s:
                 print("You pressed the down key")
                 player.decrease_speed()
                 fish.decrease_speed()
-                blue_coral.decrease_speed()
+                #Blue_Coral.decrease_speed()
             if event.key == pygame.K_a:
                 print("You pressed the left key")
                 player.move_left()
@@ -61,6 +65,29 @@ while lives > 0 and running:
 
     #blit background
     screen.blit(background, (0, 0))
+
+    # update the player
+    player.update()
+    fishes.update()
+    blue_corals.update()
+
+    # check for collisions between player and fish/enemy
+    result = pygame.sprite.spritecollide(player, fishes, True)
+    result2 = pygame.sprite.spritecollide(player, blue_corals, True)
+
+    # print(result)
+    if result:
+        # play sounds
+        #pygame.mixer.Sound.play(chomp)
+        score += len(result)
+        add_fish(len(result))
+
+    if result2:
+        # play sounds
+        #pygame.mixer.Sound.play(hurt)
+        lives -= len(result2)
+        score -= len(result2)
+        add_blue_corals(len(result2))
 
     # check if fish left the screen
     for fish in fishes:
@@ -78,17 +105,30 @@ while lives > 0 and running:
             x = random.randint(0, screen_width - (tile_size * 2))
             blue_corals.add(Blue_Coral(x, y, player.speed))
 
-    #update the player
-    player.update()
-    fishes.update()
-    blue_corals.update()
-
     player.draw(screen)
     fishes.draw(screen)
     blue_corals.draw(screen)
 
-    #update display
-    pygame.display.flip()
+# update score on screen
+text = score_font.render(f"{score}", True, (50, 81, 123))
+screen.blit(text, (screen_width - text.get_width() / 2 - 40, screen_height / 10 - text.get_height() / 2))
+
+# create new background whengame over
+screen.blit(background, (0, 0))
+
+# show game over message
+message = score_font.render("GAME OVER", True, (0, 0, 0))
+screen.blit(message, (screen_width / 2 - message.get_width() / 2, screen_height / 2))
+
+# show final score
+score_text = score_font.render(f"Score: {score}", True, (0, 0, 0))
+screen.blit(score_text,(screen_width / 2 - score_text.get_width() / 2, screen_height / 2 + score_text.get_height()))
+
+# update display
+pygame.display.flip()
+
+#update display
+pygame.display.flip()
 
 while True:
     for event in pygame.event.get():
