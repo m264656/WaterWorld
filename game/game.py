@@ -64,7 +64,7 @@ while lives > 0 and running:
             fishes.remove(fish)
             y = random.randint(screen_height, screen_height * 2)
             x = random.randint(0, screen_width - (tile_size * 2))
-            fishes.add(Fish(x, y))
+            fishes.add(Fish(x, y, player.speed))
 
     #update the player
     player.update()

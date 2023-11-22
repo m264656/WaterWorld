@@ -1,9 +1,9 @@
 import pygame
 from parameters import *
-from main_boat import Main_Boat
+
 class Fish(pygame.sprite.Sprite):
 
-    def __init__(self, x,y):
+    def __init__(self, x, y, speed=player_speed):
         super().__init__()
         self.image = pygame.image.load("../assets/sprites/purple_fish.png").convert()
         self.image.set_colorkey((0, 0, 0))
@@ -11,8 +11,18 @@ class Fish(pygame.sprite.Sprite):
         self.rect = self.image.get_rect()
         self.x = x
         self.y = y
-        self.speed =
+        self.speed = speed
         self.rect.center = (x,y)
+
+    def increase_speed(self):
+        if self.speed < MAX_SPEED:
+            self.speed += 0.05
+
+    def decrease_speed(self):
+        if self.speed > MIN_SPEED:
+            self.speed -= 0.05
+        else:
+            self.speed = MIN_SPEED
 
     def update(self):
         #update y position of fish
