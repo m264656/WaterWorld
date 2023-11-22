@@ -109,11 +109,15 @@ while lives > 0 and running:
     fishes.draw(screen)
     blue_corals.draw(screen)
 
-# update score on screen
-text = score_font.render(f"{score}", True, (50, 81, 123))
-screen.blit(text, (screen_width - text.get_width() / 2 - 40, screen_height / 10 - text.get_height() / 2))
+    # update score on screen
+    text = score_font.render(f"{score}", True, (50, 81, 123))
+    screen.blit(text, (screen_width - text.get_width() / 2 - 40, screen_height / 10 - text.get_height() / 2))
 
-# create new background whengame over
+    pygame.display.flip()
+
+    clock.tick(60)
+
+# create new background when game over
 screen.blit(background, (0, 0))
 
 # show game over message
