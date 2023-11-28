@@ -2,7 +2,6 @@ import pygame
 from parameters import *
 
 class Blue_Coral(pygame.sprite.Sprite):
-
     def __init__(self, x, y, speed=player_speed):
         super().__init__()
         self.image = pygame.image.load("../assets/sprites/blue_coral.png").convert()
