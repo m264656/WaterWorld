@@ -4,7 +4,7 @@ screen_height = 600
 tile_size = 64
 
 MIN_SPEED = 1
-MAX_SPEED = 4
+MAX_SPEED = 3
 player_speed = 2
 
 

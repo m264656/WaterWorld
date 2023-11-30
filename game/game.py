@@ -1,7 +1,6 @@
 import pygame
 import sys
 import random
-import time
 
 from game_background import draw_game_background, add_asset, increase_loop, decrease_loop, add_enemy
 from parameters import *
@@ -28,7 +27,7 @@ screen = pygame.display.set_mode((screen_width, screen_height))
 
 #clock object and timer for game
 clock = pygame.time.Clock()
-clock_font = pygame.font.Font("../assets/fonts/Minangrasa.otf", 30)
+clock_font = pygame.font.Font("../assets/fonts/Minangrasa.otf", 40)
 counter = 60
 clock_text = clock_font.render(f"{counter}", True, (50, 81, 123))
 
@@ -46,7 +45,7 @@ add_asset(3, blue_corals, Blue_Coral)
 add_asset(3, rocks, Rock)
 add_asset(2, grassy_rocks, Grassy_Rock)
 add_asset(4, orange_corals, Orange_Coral)
-add_enemy(2)
+add_enemy(1)
 
 #draw player the main boat player
 player = Main_Boat(screen_width/2, screen_height/2)
@@ -57,6 +56,11 @@ aim = Crosshair(screen_width/2, screen_height/3)
 #load new font to keep store
 score = 0
 score_font = pygame.font.Font("../assets/fonts/Minangrasa.otf", 50)
+
+#load new font for ammunition count
+balls = 5
+balls_font = pygame.font.Font("../assets/fonts/Minangrasa.otf", 40)
+balls_text = balls_font.render(f"{balls}", True, (50, 81, 123))
 
 #set lives
 lives = NUM_LIVES
@@ -129,15 +133,22 @@ while lives > 0 and running:
             player.stop()
 
         #shoot with mouse click
-        if event.type == pygame.MOUSEBUTTONDOWN:
+        if event.type == pygame.MOUSEBUTTONDOWN and len(bullets) <5:
             shoot()
-            enemy_shoot()
+            balls -=1
+            balls_text = balls_font.render(f"{balls}", True, (50, 81, 123))
 
         #timer count down
         if event.type == timer_event:
             counter -= 1
             print(counter)
             clock_text = clock_font.render(f"{counter}", True, (50, 81, 123))
+
+            #enemy shoot every other second
+            if counter%2 == 0:
+                enemy_shoot()
+
+            #quit if timer runs out
             if counter == 0:
                 pygame.time.set_timer(timer_event, 0)
                 running = False
@@ -168,13 +179,21 @@ while lives > 0 and running:
     for e in enemy_bullets:
         e.update()
 
-    #when bullets leave screen, delete them
+    #when bullets leave screen, delete them, add ammunition count
     for bullet in bullets:
         if bullet.x < screen_width and bullet.y < screen_height:
             continue
         else:
             bullets.remove(bullet)
+            balls += 1
         print(len(bullets))
+
+    # when bullets leave screen, delete them
+    for bullet in enemy_bullets:
+        if bullet.x < screen_width and bullet.y < screen_height:
+            continue
+        else:
+            enemy_bullets.remove(bullet)
 
     # check for collisions between player and fish/enemy
     result = pygame.sprite.spritecollide(player, fishes, True)
@@ -182,6 +201,7 @@ while lives > 0 and running:
     result3 = pygame.sprite.spritecollide(player, rocks, True)
     result4 = pygame.sprite.spritecollide(player, grassy_rocks, True)
     result5 = pygame.sprite.spritecollide(player, orange_corals, True)
+    result6 = pygame.sprite.spritecollide(player, enemies, True)
 
     #check for collison from enemy and bullet
     for bullet in bullets:
@@ -189,6 +209,13 @@ while lives > 0 and running:
         if attack_result:
             score += len(attack_result)
             add_enemy(len(attack_result))
+
+    # check for collison from enemy and bullet
+    #for bullet in enemy_bullets:
+     #   enemy_attack_result = pygame.sprite.spritecollide(player, bullet, True)
+        #if enemy_attack_result:
+            #score -= len(enemy_attack_result)
+            #lives -= len(enemy_attack_result)
 
     # print(result)
     if result:
@@ -241,6 +268,18 @@ while lives > 0 and running:
         if lives == 2:
             player = Main_Boat3(player.rect.x, player.rect.y)
 
+    if result6:
+        # play sounds
+        #pygame.mixer.Sound.play(hurt)
+        lives -= 1
+        score -= len(result6)
+        add_asset(len(result6), enemies, Enemy)
+        if lives == 3:
+            player = Main_Boat2(player.rect.x, player.rect.y)
+        if lives == 2:
+            player = Main_Boat3(player.rect.x, player.rect.y)
+
+
     #check if objects left the screen
     left_screen(fishes, Fish)
     left_screen(blue_corals, Blue_Coral)
@@ -253,14 +292,11 @@ while lives > 0 and running:
         bullet.draw(screen)
     for e in enemy_bullets:
         e.draw(screen)
+    for asset in assets:
+        asset.draw(screen)
     enemies.draw(screen)
     player.draw(screen)
     aim.draw(screen)
-    fishes.draw(screen)
-    blue_corals.draw(screen)
-    rocks.draw(screen)
-    grassy_rocks.draw(screen)
-    orange_corals.draw(screen)
 
     # update score on screen
     text = score_font.render(f"{score}", True, (50, 81, 123))
@@ -268,8 +304,13 @@ while lives > 0 and running:
 
     #update timer on screen
     clock_text = clock_font.render(f"Time Remaining: {counter}", True, (50,81,123))
-    screen.blit(clock_text, (clock_text.get_width()/10, screen_height - 2 * text.get_height()))
+    screen.blit(clock_text, (clock_text.get_width()/10, screen_height - 2 * clock_text.get_height()))
 
+    #update ammunition on screen
+    balls_text = balls_font.render(f"Ammunition: {balls}", True, (50, 81, 123))
+    screen.blit(balls_text, (balls_text.get_width() / 7, screen_height - 3 * balls_text.get_height()))
+
+    #copy game screen onto screen
     pygame.display.flip()
 
     #clock time limit for game

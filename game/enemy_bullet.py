@@ -24,4 +24,4 @@ class Enemy_Ball(pygame.sprite.Sprite):
     def draw(self, surf):
         surf.blit(self.image, self.rect)
 
-enemy_bullets = pygame.sprite.Sprite()
+enemy_bullets = pygame.sprite.Group()
