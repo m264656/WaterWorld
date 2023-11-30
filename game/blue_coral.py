@@ -14,11 +14,11 @@ class Blue_Coral(pygame.sprite.Sprite):
 
     def increase_speed(self):
         if self.speed < MAX_SPEED:
-            self.speed += 0.1
+            self.speed += 1
 
     def decrease_speed(self):
         if self.speed > MIN_SPEED:
-            self.speed -= 0.1
+            self.speed -= 1
         else:
             self.speed = MIN_SPEED
 

@@ -7,7 +7,7 @@ class Fish(pygame.sprite.Sprite):
         super().__init__()
         self.image = pygame.image.load("../assets/sprites/purple_fish.png").convert()
         self.image.set_colorkey((0, 0, 0))
-        self.image = pygame.transform.rotate(self.image, 90)
+        self.image = pygame.transform.rotate(self.image, 100)
         self.rect = self.image.get_rect()
         self.x = x
         self.y = y
@@ -16,11 +16,11 @@ class Fish(pygame.sprite.Sprite):
 
     def increase_speed(self):
         if self.speed < MAX_SPEED:
-            self.speed += 0.1
+            self.speed += 1
 
     def decrease_speed(self):
         if self.speed > MIN_SPEED:
-            self.speed -= 0.1
+            self.speed -= 1
         else:
             self.speed = MIN_SPEED
 

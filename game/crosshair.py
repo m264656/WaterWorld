@@ -11,6 +11,8 @@ class Crosshair(pygame.sprite.Sprite):
         self.x = x
         self.y = y
         self.rect.center = (x, y)
+        self.x_speed = 0
+        self.y_speed = 0
 
 
     def update(self):
@@ -19,14 +21,15 @@ class Crosshair(pygame.sprite.Sprite):
         #keep on screen
         if self.x < 0:
             self.x = 0
-        if self.x > screen_width - tile_size/3:
-            self.x = screen_width - tile_size/3
-        self.y = 20
+        if self.x > screen_width - tile_size:
+            self.x = screen_width - tile_size
+        if self.y < 0:
+            self.y = 0
+        if self.y > screen_height - tile_size:
+            self.y = screen_height - tile_size
+
         self.rect.x = self.x
         self.rect.y = self.y
 
     def draw(self, surf):
         surf.blit(self.image, self.rect)
-
-    def get_center(self):
-        return self.x + self.width / 2, self.y + self.height / 2

@@ -1,17 +1,19 @@
 import pygame
 from parameters import *
 
-class Orange_Coral(pygame.sprite.Sprite):
+class Enemy(pygame.sprite.Sprite):
+
     def __init__(self, x, y, speed=player_speed):
         super().__init__()
-        self.image = pygame.image.load("../assets/sprites/orange_coral.png").convert()
+        self.image = pygame.image.load("../assets/sprites/enemy_ship.png").convert()
         self.image.set_colorkey((0, 0, 0))
         self.rect = self.image.get_rect()
+        self.image = pygame.transform.rotate(self.image, 180)
         self.x = x
         self.y = y
         self.speed = speed
-        self.rect.center = (x,y)
-
+        self.lives = 2
+        self.rect.center = (x, y)
 
     def increase_speed(self):
         if self.speed < MAX_SPEED:
@@ -24,11 +26,16 @@ class Orange_Coral(pygame.sprite.Sprite):
             self.speed = MIN_SPEED
 
     def update(self):
-        #update y position of coral
+        # update y position of coral
         self.y -= self.speed
         self.rect.y = self.y
 
     def draw(self, surf):
         surf.blit(self.image, self.rect)
 
-orange_corals = pygame.sprite.Group()
+    def attacked(self, damage):
+        self.health -=damage
+
+
+
+enemies = pygame.sprite.Group()
