@@ -22,13 +22,9 @@ def decrease_loop(category):
         object.decrease_speed()
 
 def add_asset(num, asset, method):
-    random.seed = random.randint(0, 1000)
-    print(random.seed)
     for _ in range(num):
-        asset.add(method(random.randint(0, screen_width + tile_size), random.randint(screen_height, screen_height + 100)))
+        asset.add(method(random.randint(0, screen_width + tile_size), random.randint(screen_height, screen_height + 500)))
 
 def add_enemy(num):
-    random.seed = random.randint(0, 1000)
-    print(random.seed)
     for _ in range(num):
-        enemies.add(Enemy(random.randint(0, screen_width + tile_size), random.randint(screen_height, screen_height + 60)))
+        enemies.add(Enemy(random.randint(0, screen_width + tile_size), random.randint(screen_height, screen_height + 500)))

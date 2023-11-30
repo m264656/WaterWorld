@@ -26,8 +26,14 @@ pygame.init()
 #create screen
 screen = pygame.display.set_mode((screen_width, screen_height))
 
-#clock object
+#clock object and timer for game
 clock = pygame.time.Clock()
+clock_font = pygame.font.Font("../assets/fonts/Minangrasa.otf", 30)
+counter = 60
+clock_text = clock_font.render(f"{counter}", True, (50, 81, 123))
+
+timer_event = pygame.USEREVENT +1
+pygame.time.set_timer(timer_event, 1000)
 
 #Main Loop
 running = True
@@ -57,6 +63,7 @@ lives = NUM_LIVES
 
 #mouse invisible
 pygame.mouse.set_visible(False)
+
 
 def left_screen(objects, classification):
     for object in objects:
@@ -125,6 +132,17 @@ while lives > 0 and running:
         if event.type == pygame.MOUSEBUTTONDOWN:
             shoot()
             enemy_shoot()
+
+        #timer count down
+        if event.type == timer_event:
+            counter -= 1
+            print(counter)
+            clock_text = clock_font.render(f"{counter}", True, (50, 81, 123))
+            if counter == 0:
+                pygame.time.set_timer(timer_event, 0)
+                running = False
+
+
 
 
     # Control crosshair with mouse
@@ -248,9 +266,15 @@ while lives > 0 and running:
     text = score_font.render(f"{score}", True, (50, 81, 123))
     screen.blit(text, (screen_width - text.get_width() / 2 - 40, screen_height / 10 - text.get_height() / 2))
 
+    #update timer on screen
+    clock_text = clock_font.render(f"Time Remaining: {counter}", True, (50,81,123))
+    screen.blit(clock_text, (clock_text.get_width()/10, screen_height - 2 * text.get_height()))
+
     pygame.display.flip()
 
+    #clock time limit for game
     clock.tick(60)
+
 
 # create new background when game over
 screen.blit(background, (0, 0))
