@@ -52,6 +52,7 @@ shoot_noise = pygame.mixer.Sound("../assets/sounds/shoot.mp3")
 while main_menu:
     screen.blit(background, (0, 0))
 
+    #Dug Moloney helped me with this music
     pygame.mixer.music.load("../assets/sounds/game_noise.mp3")
     pygame.mixer.music.play(1, 0.0)
 
@@ -77,8 +78,8 @@ while main_menu:
     if game_playing == True:
         #clock object and timer for game
         clock = pygame.time.Clock()
-        clock_font = pygame.font.Font("../assets/fonts/Minangrasa.otf", 40)
         counter = 60
+        clock_font = pygame.font.Font("../assets/fonts/Minangrasa.otf", 40)
         clock_text = clock_font.render(f"{counter}", True, (50, 81, 123))
 
         timer_event = pygame.USEREVENT +1
@@ -152,7 +153,7 @@ while main_menu:
         enemy_bullets = []
         hit = False
 
-        while lives > 0:
+        while lives > 0 and counter != 0:
             for event in pygame.event.get():
                 if event.type == pygame.QUIT:
                     running = False
