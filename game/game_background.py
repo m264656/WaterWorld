@@ -4,7 +4,6 @@ import random
 
 from enemy import Enemy, enemies
 
-#funtion to draw the game background
 def draw_game_background(screen):
     water = pygame.image.load("../assets/sprites/water.png").convert()
 
@@ -21,9 +20,9 @@ def decrease_loop(category):
     for object in category:
         object.decrease_speed()
 
-def add_asset(num, asset, method):
+def add_asset(num, group, class_name):
     for _ in range(num):
-        asset.add(method(random.randint(0, screen_width + tile_size), random.randint(screen_height, screen_height + 500)))
+        group.add(class_name(random.randint(0, screen_width + tile_size), random.randint(screen_height, screen_height + 500)))
 
 def add_enemy(num):
     for _ in range(num):

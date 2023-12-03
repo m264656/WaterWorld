@@ -16,6 +16,7 @@ class Main_Boat(pygame.sprite.Sprite):
         self.speed = player_speed
         self.x_speed = 0
         self.y_speed = 0
+        self.score = 0
 
     def increase_speed(self):
         if self.speed < MAX_SPEED:
@@ -48,6 +49,17 @@ class Main_Boat(pygame.sprite.Sprite):
         self.y = 20
         self.rect.x = self.x
         self.rect.y = self.y
+
+        # TODO: accept bullets sprite group into this method
+        # Collsioncheck --> spritecollideany(self, bullets)
+        # if spritecollideany(self, bullets): then add to score
+
+        # if self.check_collision(assets):
+        #     self.image = pygame.image.load("../assets/sprites/dinghy2.png").convert()
+        #     # TODO: iterate through damaged images
+        #
+        # if self.check_collision(bullets):
+        #     self.score += 1
 
     def draw(self, surf):
         surf.blit(self.image, self.rect)
