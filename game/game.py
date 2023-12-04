@@ -125,6 +125,7 @@ while main_menu:
                     x = random.randint(0, screen_width - (tile_size * 2))
                     objects.add(classification(x, y, player.speed))
 
+        #Sonny helped me do some math with shoot
         def shoot():
             bullet = CBall(player.rect.x, player.rect.y)
             print(bullet)
