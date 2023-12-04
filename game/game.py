@@ -236,9 +236,7 @@ while main_menu:
 
             #when bullets leave screen, delete them, add ammunition count
             for bullet in bullets:
-                if bullet.x < screen_width and bullet.y < screen_height:
-                    continue
-                else:
+                if bullet.x > screen_width or bullet.y > screen_height:
                     bullets.remove(bullet)
                     balls += 1
 
