@@ -10,8 +10,12 @@ get hit with a cannon ball. If you hit rocks, corals, or the enemy ship, you wil
 You have 60 seconds to get the highest score possible. You have three lives total. 
 
 Sources
+
 Pygame Dictionary: https://www.pygame.org/docs/ref/sprite.html#pygame.sprite.Sprite.kill
+
 Multiple Screens: https://github.com/russs123/pygame_tutorials/blob/main/Menu/main.py
+
 timer: https://copyprogramming.com/howto/have-to-implement-a-time-limit-a-pygame#how-to-set-a-time-limit-for-a-game
+
 Projectile: https://www.youtube.com/watch?v=hM3dL5XEk5E&t=600s
 
